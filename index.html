@@ -129,6 +129,9 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
 /* ===== Tablet & HP: bagan menurun ke bawah, keterangan jadi lembar dari bawah ===== */
 @media (max-width:999px){
   .head{padding-right:0}
+  .page{min-height:0}
+  .main{flex:none}
+  .treecard{justify-content:flex-start}
   .brand{position:static;order:-1;animation:slidein .9s cubic-bezier(.2,.75,.2,1) .15s backwards}
   .logo{width:56px;height:56px}
   .bt2{font-size:18px}
