@@ -20,11 +20,11 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
 /* ===== Kerangka halaman ===== */
 .outer{min-height:100vh;background:radial-gradient(900px 480px at 0% 0%,rgba(15,118,110,0.08),transparent 60%),radial-gradient(800px 520px at 100% 0%,rgba(67,56,202,0.07),transparent 60%),#F3F5F8;color:#12233F;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden}
 .outer::before{content:'';position:absolute;inset:-25%;z-index:0;pointer-events:none;background:radial-gradient(circle at 18% 22%,rgba(15,118,110,.20),transparent 34%),radial-gradient(circle at 82% 16%,rgba(67,56,202,.18),transparent 32%),radial-gradient(circle at 70% 82%,rgba(190,18,60,.14),transparent 34%),radial-gradient(circle at 26% 80%,rgba(180,83,9,.16),transparent 32%);animation:drift 24s ease-in-out infinite alternate}
-.page{position:relative;z-index:1;isolation:isolate;max-width:1280px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;gap:clamp(14px,2vw,22px);padding:clamp(16px,2.6vw,36px)}
+.page{position:relative;z-index:1;isolation:isolate;max-width:2200px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;gap:clamp(14px,2vw,22px);padding:clamp(16px,2.6vw,36px)}
 .head{display:flex;flex-direction:column;gap:8px;min-width:0}
 .eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#46566F;line-height:1.7;overflow-wrap:anywhere}
 .title{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.1;font-weight:700;letter-spacing:-.02em;color:#12233F}
-.main{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:stretch}
+.main{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) clamp(320px,23vw,460px);gap:clamp(20px,1.6vw,32px);align-items:stretch}
 
 .page::before{content:'';position:absolute;inset:clamp(6px,1.2vw,16px);z-index:-1;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.34));border:1px solid rgba(255,255,255,.85);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 30px 70px rgba(18,35,63,.10);animation:fadein 1s ease backwards}
 
@@ -50,13 +50,13 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
 .col{display:flex;flex-direction:column;align-items:center;min-width:0}
 .stub{width:2px;height:clamp(22px,3.4vh,44px);flex:none;background:#6B7A92}
 .stub2{width:2px;height:clamp(14px,2.2vh,26px);flex:none}
-.node{width:100%;max-width:190px;min-height:clamp(60px,8.4vh,92px);border:0;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center}
+.node{width:100%;max-width:clamp(190px,14.5vw,290px);min-height:clamp(60px,8.4vh,92px);border:0;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center}
 .node-name{font-weight:700;font-size:clamp(15px,min(1.3vw,2.2vh),19px);line-height:1.15}
 .node-badge{font-size:11px;font-weight:500;letter-spacing:.08em}
 .node.root{max-width:none;min-width:220px;min-height:clamp(64px,9.2vh,100px);padding:10px 32px}
 .node.root .node-name{font-size:clamp(20px,min(1.7vw,2.9vh),26px)}
 .node.root .node-badge{font-size:12px}
-.group{flex:1 1 auto;width:100%;max-width:210px;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;transition:opacity .35s}
+.group{flex:1 1 auto;width:100%;max-width:clamp(210px,15.5vw,310px);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;transition:opacity .35s}
 .gl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#12233F;text-align:center}
 .chip{min-height:clamp(38px,5vh,54px);border-radius:8px;padding:7px 10px;font-size:clamp(13px,min(1.05vw,1.8vh),16px);font-weight:600;line-height:1.2;color:#12233F;width:100%}
 .chip.link{font-size:12px;line-height:1.3}
@@ -111,6 +111,20 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
 .pill{animation:pop .45s cubic-bezier(.2,.75,.2,1) backwards}
 .gl{animation:fadein .8s ease 1.3s backwards}
 @keyframes gx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ===== Layar desktop pendek (laptop): rapatkan agar muat tanpa scroll ===== */
+@media (min-width:1000px) and (max-height:760px){
+  .page{gap:8px;padding-top:22px;padding-bottom:22px}.page::before{inset:6px}
+  .head{gap:4px}.title{font-size:32px}
+  .brand{top:20px}.logo{width:56px;height:56px}.head{padding-right:240px}
+  .treecard{padding:12px 20px}
+  .rootwrap{gap:4px}.trunk,.stub{height:14px}.stub2{height:8px}
+  .node{min-height:46px;padding:5px 10px}.node.root{min-height:50px;padding:5px 28px}
+  .group{padding:8px;gap:6px}.chip{min-height:34px;padding:5px 8px}
+  .detail{padding:20px 22px;gap:10px}.dname{font-size:26px}.ddesc{font-size:14px;line-height:1.55}
+  .dnav{margin-top:2px;gap:8px}.navbtn{height:40px}
+  .legend{padding:8px 20px;gap:6px 24px}.li{font-size:12.5px}.lc{padding:3px 0}
+}
 
 /* ===== Tablet & HP: bagan menurun ke bawah, keterangan jadi lembar dari bawah ===== */
 @media (max-width:999px){
