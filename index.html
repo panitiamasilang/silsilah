@@ -124,7 +124,34 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
   .detail{padding:20px 22px;gap:10px}.dname{font-size:26px}.ddesc{font-size:14px;line-height:1.55}
   .dnav{margin-top:2px;gap:8px}.navbtn{height:40px}
   .legend{padding:8px 20px;gap:6px 24px}.li{font-size:12.5px}.lc{padding:3px 0}
+  .tools{margin-bottom:0}.seg{padding:3px}.segbtn{padding:5px 14px}.search,.printbtn{height:28px}
+  .treecard{padding-top:8px;padding-bottom:8px}
+  .group{padding:6px 8px;gap:5px}.chip{min-height:32px}
 }
+
+/* ===== Alat: Bagan / Daftar, cari, cetak ===== */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:linear-gradient(180deg,#EEF2F7,#E3E9F2);box-shadow:inset 0 1px 2px rgba(18,35,63,.12)}
+.segbtn{border:0;background:transparent;padding:7px 16px;border-radius:999px;font-family:inherit;font-size:12px;font-weight:600;color:#46566F;transition:background .3s,color .3s,box-shadow .3s}
+.segbtn.on{background:linear-gradient(180deg,#FFFFFF,#F3F6FA);color:#12233F;box-shadow:inset 0 1px 0 #FFFFFF,0 2px 6px rgba(18,35,63,.18)}
+.tright{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+.search{height:34px;border-radius:999px;border:1px solid #D5DDE8;padding:0 14px;font-family:inherit;font-size:12px;font-weight:500;color:#12233F;background:#FFFFFF;box-shadow:inset 0 1px 2px rgba(18,35,63,.06);min-width:0;width:clamp(130px,15vw,210px);outline:none}
+.search:focus{border-color:#6B7A92;box-shadow:0 0 0 3px rgba(107,122,146,.18)}
+.printbtn{height:34px;border:0;border-radius:999px;padding:0 16px;font-family:inherit;font-size:12px;font-weight:600;color:#FFFFFF;background:linear-gradient(180deg,#1B3358,#12233F);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 3px 0 #0A1526,0 8px 14px rgba(18,35,63,.2);transition:transform .2s,box-shadow .2s}
+.printbtn:hover{transform:translateY(-2px)}
+.printbtn:active{transform:translateY(1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 #0A1526}
+.lst{display:flex;flex-direction:column;gap:8px;padding:4px 2px}
+.row{display:grid;grid-template-columns:6px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;border:0;border-radius:10px;padding:10px 14px 10px 0;color:#12233F;font-family:inherit;box-shadow:inset 0 1px 0 #FFFFFF,0 2px 8px rgba(18,35,63,.07);transition:transform .25s,box-shadow .25s}
+.row:hover{transform:translateX(4px);box-shadow:inset 0 1px 0 #FFFFFF,0 8px 18px rgba(18,35,63,.12)}
+.rbar{align-self:stretch;border-radius:0 4px 4px 0}
+.rtext{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rname{font-size:14px;font-weight:700;line-height:1.2}
+.rsub{font-size:11px;color:#46566F;line-height:1.35;overflow-wrap:anywhere}
+.rbadge{font-size:11px;font-weight:600;color:#46566F;white-space:nowrap}
+.empty2{font-size:13px;color:#46566F;text-align:center;padding:24px 0}
+@media (min-width:1000px){.lst{max-height:calc(100vh - 400px);min-height:160px;overflow-y:auto;padding-right:6px}}
+@media (max-width:999px){.tools{justify-content:flex-start}.tright{width:100%}.search{flex:1 1 auto;width:auto}}
+@media (min-width:1000px){.treecard{position:relative}.tools{position:absolute;top:14px;left:18px;right:18px;margin:0;z-index:2;flex-wrap:nowrap}.lst{margin-top:44px}}
 
 /* ===== Tablet & HP: bagan menurun ke bawah, keterangan jadi lembar dari bawah ===== */
 @media (max-width:999px){
@@ -212,6 +239,16 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
   .lift,.lift:hover,.lift:active,.detail,.detail.is-open,.scrim{transition:none;transform:none}
   .detail{transform:none}
 }
+/* ===== Cetak ===== */
+@media print{
+  body,.outer{background:#FFFFFF!important;min-height:0!important}
+  .outer::before,.page::before,.tools,.detail,.scrim,.closebtn,.grab{display:none!important}
+  .page{padding:0;max-width:none}
+  .main{display:block}
+  .treecard,.legend{box-shadow:none!important;background:#FFFFFF!important;border:1px solid #D5DDE8!important;break-inside:avoid}
+  .node,.chip,.group,.row{box-shadow:none!important;animation:none!important;transition:none!important}
+  .row:hover{transform:none}
+}
 </style>
 </helmet>
 <div class="outer">
@@ -230,6 +267,19 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
   <div class="main">
 
     <div class="treecard" id="bagan">
+      <div class="tools">
+        <div class="seg" role="tablist" aria-label="Tampilan">
+          <button type="button" class="segbtn {{bActive}}" onClick="{{setBagan}}">Bagan</button>
+          <button type="button" class="segbtn {{lActive}}" onClick="{{setList}}">Daftar</button>
+        </div>
+        <div class="tright">
+          <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+            <input class="search" type="search" placeholder="Cari nama…" aria-label="Cari anggota" value="{{qRaw}}" onInput="{{onSearch}}">
+          </sc-if>
+          <button type="button" class="printbtn" onClick="{{doPrint}}">Cetak</button>
+        </div>
+      </div>
+      <sc-if value="{{isBagan}}" hint-placeholder-val="{{true}}">
       <div class="tree">
 
         <div class="rootwrap">
@@ -268,6 +318,22 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
         </div>
 
       </div>
+      </sc-if>
+
+      <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+        <div class="lst">
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="10">
+            <button type="button" class="row rise" onClick="{{r.pick}}" style="animation-delay: {{r.delay}}; background: {{r.rowBg}}; box-shadow: {{r.shadow}}">
+              <span class="rbar" style="background: {{r.color}}; width: 6px"></span>
+              <span class="rtext"><span class="rname">{{r.name}}</span><span class="rsub">{{r.sub}}</span></span>
+              <span class="rbadge">{{r.badge}}</span>
+            </button>
+          </sc-for>
+          <sc-if value="{{noRows}}" hint-placeholder-val="{{false}}">
+            <div class="empty2">Tidak ada anggota yang cocok dengan pencarian.</div>
+          </sc-if>
+        </div>
+      </sc-if>
     </div>
 
     <div class="scrim {{openClass}}" onClick="{{close}}"></div>
@@ -370,6 +436,28 @@ class Component extends DCLogic {
       });
     };
 
+    const view = (this.state && this.state.view) || 'bagan';
+    const qRaw = (this.state && typeof this.state.q === 'string') ? this.state.q : '';
+    const q = qRaw.trim().toLowerCase();
+    const isList = view === 'daftar';
+    const rows = nodes
+      .filter((n) => !q || (n.name + ' ' + n.status).toLowerCase().indexOf(q) !== -1)
+      .map((n, i) => {
+        const b = B[n.branch];
+        const on = n.id === sel;
+        const parentName = n.parent ? byId[n.parent].name : '';
+        return {
+          name: n.name,
+          badge: n.badge,
+          sub: n.parent ? (n.status + '  ·  anak dari ' + parentName) : n.status,
+          color: b.c,
+          rowBg: on ? b.t : 'linear-gradient(180deg, #FFFFFF 0%, #F7F9FC 100%)',
+          shadow: on ? 'inset 0 0 0 1.5px ' + b.c + ', 0 6px 16px rgba(18,35,63,0.12)' : 'inset 0 1px 0 #FFFFFF, 0 2px 8px rgba(18,35,63,0.07)',
+          delay: (60 + i * 50) + 'ms',
+          pick: pickFn(n.id)
+        };
+      });
+
     const root = dress(byId.kumpi, 'card');
     const cols = nodes.filter((n) => n.parent === 'kumpi').map((n, i) => {
       const b = B[n.branch];
@@ -397,6 +485,18 @@ class Component extends DCLogic {
       root: Object.assign({}, root, { bg: '#12233F', fg: '#FFFFFF', shadow: 'inset 0 1px 0 rgba(255,255,255,0.22), 0 3px 0 #0A1526, 0 14px 24px rgba(18,35,63,0.25)' + (sel === 'kumpi' ? ring('#12233F') : '') }),
       cols: cols,
       openClass: open ? 'is-open' : '',
+      view: view,
+      isBagan: !isList,
+      isList: isList,
+      bActive: isList ? '' : 'on',
+      lActive: isList ? 'on' : '',
+      setBagan: () => this.setState({ view: 'bagan' }),
+      setList: () => this.setState({ view: 'daftar' }),
+      qRaw: qRaw,
+      onSearch: (e) => this.setState({ q: (e && e.target) ? e.target.value : '' }),
+      rows: rows,
+      noRows: rows.length === 0,
+      doPrint: () => { if (typeof window !== 'undefined') window.print(); },
       close: () => this.setState({ open: false }),
       stop: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       current: {
