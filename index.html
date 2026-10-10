@@ -166,6 +166,41 @@ button:focus-visible{outline:3px solid #12233F;outline-offset:3px}
   .legend{grid-template-columns:minmax(0,1fr);padding:14px 16px}
 }
 
+/* ===== HP (lebar ≤600px): susunan dirapatkan agar layar termanfaatkan maksimal ===== */
+@media (max-width:600px){
+  .main{gap:12px}
+  .page{padding:12px 10px;gap:10px}
+  .page::before{inset:4px;border-radius:20px}
+  .brand{gap:9px}
+  .logo{width:46px;height:46px}
+  .bt1{font-size:9px;letter-spacing:.16em}
+  .bt2{font-size:17px}
+  .head{gap:4px}
+  .eyebrow{font-size:9.5px;letter-spacing:.08em;line-height:1.5}
+  .title{font-size:24px}
+  .treecard{padding:10px 10px 12px;border-radius:14px}
+  .rl{font-size:9px}
+  .rootwrap{gap:6px;margin-bottom:8px}
+  .node.root{min-height:50px;padding:6px 14px}
+  .node.root .node-name{font-size:17px}
+  .node.root .node-badge{font-size:11px}
+  .cols{gap:12px}
+  .branches{margin-left:6px}
+  .col::after{top:-12px;height:34px}
+  .col:first-child::after{top:-8px;height:30px}
+  .col::before{top:22px}
+  .node{min-height:44px;padding:6px 12px;border-radius:9px}
+  .node-name{font-size:14.5px}
+  .node-badge{font-size:10px}
+  .group{margin-top:6px;padding:7px 8px;gap:5px;border-radius:10px}
+  .gl{font-size:9px;letter-spacing:.12em}
+  .chip{min-height:34px;padding:5px 10px;font-size:13px;border-radius:7px}
+  .chip.link{min-height:30px;font-size:11.5px}
+  .legend{grid-template-columns:minmax(0,1fr);padding:10px 12px;gap:6px}
+  .li{grid-template-columns:44px minmax(0,1fr);gap:10px;font-size:12px}
+  .lc{font-size:11px}
+}
+
 @media (prefers-reduced-motion:reduce){
   .rise,.grow-y,.grow-x,.outer::before,.page::before,.brand,.logo,.logo::after,.eyebrow,.title,.treecard,.detail,.legend,.li,.chip,.pill,.gl{animation:none}
   .lift,.lift:hover,.lift:active,.detail,.detail.is-open,.scrim{transition:none;transform:none}
